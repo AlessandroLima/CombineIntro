@@ -1,91 +1,101 @@
-import Combine
 import Foundation
 import UIKit
 
 @dynamicMemberLookup
 class BalanceViewController: UIViewController {
     private let rootView = BalanceView()
-    private let viewModel: BalanceViewModel
+    private let service: BalanceService
+    private var state = BalanceViewState() {
+        didSet { updateView() }
+    }
+    private var notificationCenterTokens: [NSObjectProtocol] = []
     private let formatDate: (Date) -> String
-    private var cancellables: Set<AnyCancellable> = []
-    
+
     init(
         service: BalanceService,
         formatDate: @escaping (Date) -> String = BalanceViewState.relativeDateFormatter.string(from:)
     ) {
-        self.viewModel = .init(service: service)
+        self.service = service
         self.formatDate = formatDate
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func loadView() {
         view = rootView
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let formatDate = self.formatDate
+        rootView.refreshButton.addTarget(
+            self,
+            action: #selector(refreshBalance),
+            for: .touchUpInside
+        )
 
-        cancellables = [
-            viewModel.$state
-                .map(\.isRefreshing)
-                .removeDuplicates()
-                .assign(to: \.isHidden, on: rootView.refreshButton),
+        notificationCenterTokens.append(
+            NotificationCenter.default.addObserver(
+                forName: UIApplication.willResignActiveNotification,
+                object: nil,
+                queue: .main
+            ) { [weak self ]_ in
+                self?.state.isRedacted = true
+            }
+        )
 
-            viewModel.$state
-                .map(\.isRefreshing)
-                .removeDuplicates()
-                .assign(
-                    to: \.writableIsAnimating,
-                    on: rootView.activityIndicator
-                ),
-
-            viewModel.$state
-                .map(\.formattedBalance)
-                .removeDuplicates()
-                .map(Optional.some)
-                .assign(to: \.text, on: rootView.valueLabel),
-
-            viewModel.$state
-                .map { $0.infoText(formatDate: formatDate) }
-                .removeDuplicates()
-                .map(Optional.some)
-                .assign(to: \.text, on: rootView.infoLabel),
-
-            viewModel.$state
-                .map(\.infoColor)
-                .removeDuplicates()
-                .map(Optional.some)
-                .assign(to: \.textColor, on: rootView.infoLabel),
-
-            viewModel.$state
-                .map(\.isRedacted)
-                .removeDuplicates()
-                .map { isRedacted in
-                    isRedacted ? BalanceView.alphaForRedactedValueLabel : 1
-                }
-                .assign(to: \.alpha, on: rootView.valueLabel),
-
-            viewModel.$state
-                .map(\.isRedacted)
-                .removeDuplicates()
-                .map { !$0 }
-                .assign(to: \.isHidden, on: rootView.redactedOverlay),
-
-            rootView.refreshButton.touchUpInsidePublisher
-                .map { _ in BalanceViewEvent.refreshButtonWasTapped }
-                .subscribe(viewModel.eventSubject)
-        ]
+        notificationCenterTokens.append(
+            NotificationCenter.default.addObserver(
+                forName: UIApplication.didBecomeActiveNotification,
+                object: nil,
+                queue: .main
+            ) { [weak self ]_ in
+                self?.state.isRedacted = false
+            }
+        )
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        viewModel.eventSubject.send(.viewDidAppear)
+        refreshBalance()
+    }
+
+    @objc private func refreshBalance() {
+        state.didFail = false
+        state.isRefreshing = true
+        service.refreshBalance { [weak self] result in
+            self?.handleResult(result)
+        }
+    }
+
+    private func handleResult(_ result: Result<BalanceResponse, Error>) {
+        state.isRefreshing = false
+        do {
+            state.lastResponse = try result.get()
+        } catch {
+            state.didFail = true
+        }
+    }
+
+    private func updateView() {
+        rootView.refreshButton.isHidden = state.isRefreshing
+        if state.isRefreshing {
+            rootView.activityIndicator.startAnimating()
+        } else {
+            rootView.activityIndicator.stopAnimating()
+        }
+        rootView.valueLabel.text = state.formattedBalance
+        rootView.valueLabel.alpha = state.isRedacted
+            ? BalanceView.alphaForRedactedValueLabel
+            : 1
+        rootView.infoLabel.text = state.infoText(formatDate: formatDate)
+        rootView.infoLabel.textColor = state.infoColor
+        rootView.redactedOverlay.isHidden = !state.isRedacted
+
+        view.setNeedsLayout()
     }
 }
 
@@ -94,10 +104,10 @@ import SwiftUI
 
 struct BalanceViewController_Previews: PreviewProvider {
     static private func makePreview() -> some View {
-        BalanceViewController(service: LiveBalanceService())
+        BalanceViewController(service: FakeBalanceService())
             .staticRepresentable
     }
-    
+
     static var previews: some View {
         Group {
             makePreview()

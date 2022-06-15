@@ -16,12 +16,7 @@
 		61120383264554E300311AE0 /* BalanceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61120382264554E300311AE0 /* BalanceService.swift */; };
 		611203852645558600311AE0 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611203842645558600311AE0 /* UIViewController+Extensions.swift */; };
 		61372F98264941F20079A228 /* BalanceViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61372F97264941F20079A228 /* BalanceViewState.swift */; };
-		613A3DF62668E5DD00E99073 /* LiveBalanceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613A3DF52668E5DC00E99073 /* LiveBalanceService.swift */; };
-		613BAE142653CB5F00438EB3 /* BalanceViewEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613BAE132653CB5F00438EB3 /* BalanceViewEvent.swift */; };
-		6168EFC826566CA3009E0BD1 /* UIActivityIndicatorView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6168EFC726566CA3009E0BD1 /* UIActivityIndicatorView+Extensions.swift */; };
 		61E0BE8E264BDED500414040 /* CombineIntroTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E0BE8D264BDED500414040 /* CombineIntroTests.swift */; };
-		61F14E2A264FD7AF00B88374 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F14E29264FD7AF00B88374 /* CustomButton.swift */; };
-		61F14E2C265181A200B88374 /* BalanceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F14E2B265181A200B88374 /* BalanceViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,14 +41,9 @@
 		61120382264554E300311AE0 /* BalanceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceService.swift; sourceTree = "<group>"; };
 		611203842645558600311AE0 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		61372F97264941F20079A228 /* BalanceViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceViewState.swift; sourceTree = "<group>"; };
-		613A3DF52668E5DC00E99073 /* LiveBalanceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveBalanceService.swift; sourceTree = "<group>"; };
-		613BAE132653CB5F00438EB3 /* BalanceViewEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceViewEvent.swift; sourceTree = "<group>"; };
-		6168EFC726566CA3009E0BD1 /* UIActivityIndicatorView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIActivityIndicatorView+Extensions.swift"; sourceTree = "<group>"; };
 		61E0BE8B264BDED500414040 /* CombineIntroTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CombineIntroTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		61E0BE8D264BDED500414040 /* CombineIntroTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombineIntroTests.swift; sourceTree = "<group>"; };
 		61E0BE8F264BDED500414040 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		61F14E29264FD7AF00B88374 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
-		61F14E2B265181A200B88374 /* BalanceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,9 +85,6 @@
 		611203652645517F00311AE0 /* CombineIntro */ = {
 			isa = PBXGroup;
 			children = (
-				613A3DF42668E5C900E99073 /* Services */,
-				6168EFC626566C8B009E0BD1 /* Extensions */,
-				61F14E28264FD79D00B88374 /* CustomViews */,
 				6112037D264552C700311AE0 /* PreviewHelpers */,
 				6112037A2645525000311AE0 /* BalanceFeature */,
 				611203662645517F00311AE0 /* AppDelegate.swift */,
@@ -116,8 +103,6 @@
 				611203802645549F00311AE0 /* BalanceViewController.swift */,
 				61120382264554E300311AE0 /* BalanceService.swift */,
 				61372F97264941F20079A228 /* BalanceViewState.swift */,
-				61F14E2B265181A200B88374 /* BalanceViewModel.swift */,
-				613BAE132653CB5F00438EB3 /* BalanceViewEvent.swift */,
 			);
 			path = BalanceFeature;
 			sourceTree = "<group>";
@@ -130,22 +115,6 @@
 			path = PreviewHelpers;
 			sourceTree = "<group>";
 		};
-		613A3DF42668E5C900E99073 /* Services */ = {
-			isa = PBXGroup;
-			children = (
-				613A3DF52668E5DC00E99073 /* LiveBalanceService.swift */,
-			);
-			path = Services;
-			sourceTree = "<group>";
-		};
-		6168EFC626566C8B009E0BD1 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				6168EFC726566CA3009E0BD1 /* UIActivityIndicatorView+Extensions.swift */,
-			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
 		61E0BE8C264BDED500414040 /* CombineIntroTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -153,14 +122,6 @@
 				61E0BE8F264BDED500414040 /* Info.plist */,
 			);
 			path = CombineIntroTests;
-			sourceTree = "<group>";
-		};
-		61F14E28264FD79D00B88374 /* CustomViews */ = {
-			isa = PBXGroup;
-			children = (
-				61F14E29264FD7AF00B88374 /* CustomButton.swift */,
-			);
-			path = CustomViews;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -264,15 +225,10 @@
 			files = (
 				6112037C2645526300311AE0 /* BalanceView.swift in Sources */,
 				611203672645517F00311AE0 /* AppDelegate.swift in Sources */,
-				6168EFC826566CA3009E0BD1 /* UIActivityIndicatorView+Extensions.swift in Sources */,
 				61120383264554E300311AE0 /* BalanceService.swift in Sources */,
 				611203812645549F00311AE0 /* BalanceViewController.swift in Sources */,
-				613BAE142653CB5F00438EB3 /* BalanceViewEvent.swift in Sources */,
-				61F14E2A264FD7AF00B88374 /* CustomButton.swift in Sources */,
 				611203852645558600311AE0 /* UIViewController+Extensions.swift in Sources */,
 				61372F98264941F20079A228 /* BalanceViewState.swift in Sources */,
-				61F14E2C265181A200B88374 /* BalanceViewModel.swift in Sources */,
-				613A3DF62668E5DD00E99073 /* LiveBalanceService.swift in Sources */,
 				611203692645517F00311AE0 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
