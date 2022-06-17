@@ -11,14 +11,16 @@ class BalanceViewController: UIViewController {
             updateView()
         }
     }
-    private var notificationCenterTokens: [NSObjectProtocol] = []
+    //private var notificationCenterTokens: [NSObjectProtocol] = []
     private let formatDate: (Date) -> String
     private var notificationCenter: NotificationCenter = .default
+    
     
     private var butonCancellable: AnyCancellable?
     private var willResignActiveNotificationCancellable: AnyCancellable?
     private var didBecomeActiveNotificationCancellable: AnyCancellable?
-
+    private var cancellables = Set<AnyCancellable>()
+    
     init(
         service: BalanceService,
         formatDate: @escaping (Date) -> String = BalanceViewState.relativeDateFormatter.string(from:)
@@ -39,11 +41,12 @@ class BalanceViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        butonCancellable = rootView.refreshButton
+        rootView.refreshButton
             .touchUpInsidePublisher
             .sink{ [weak self ] _ in
             self?.refreshBalance()
         }
+            .store(in: &cancellables)
 
         // isso foi refatorado abaixo para um publisher
         //        notificationCenterTokens.append(
@@ -57,12 +60,14 @@ class BalanceViewController: UIViewController {
         //        )
 
         
-        willResignActiveNotificationCancellable = notificationCenter.publisher(for: UIApplication.willResignActiveNotification)
+        notificationCenter.publisher(for: UIApplication.willResignActiveNotification)
             //determino qual level irá receber a notification se tornando assincrono
             //.receive(on: DispatchQueue.main)
             .sink { [weak self ] _ in
                 self?.state.isRedacted = true
             }
+            .store(in: &cancellables)
+        
         // isso foi refatorado abaixo para um publisher
 //        notificationCenterTokens.append(
 //            NotificationCenter.default.addObserver(
@@ -74,12 +79,13 @@ class BalanceViewController: UIViewController {
 //            }
 //        )
         
-        didBecomeActiveNotificationCancellable = notificationCenter.publisher(for: UIApplication.didBecomeActiveNotification)
+       notificationCenter.publisher(for: UIApplication.didBecomeActiveNotification)
         //determino qual level irá receber a notification se tornando assincrono
         //.receive(on: DispatchQueue.main)
             .sink{ [weak self] _ in
                 self?.state.isRedacted = false
             }
+            .store(in: &cancellables)
 
         
     }
