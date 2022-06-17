@@ -13,7 +13,11 @@ class BalanceViewController: UIViewController {
     }
     private var notificationCenterTokens: [NSObjectProtocol] = []
     private let formatDate: (Date) -> String
+    private var notificationCenter: NotificationCenter = .default
+    
     private var butonCancellable: AnyCancellable?
+    private var willResignActiveNotificationCancellable: AnyCancellable?
+    private var didBecomeActiveNotificationCancellable: AnyCancellable?
 
     init(
         service: BalanceService,
@@ -41,25 +45,43 @@ class BalanceViewController: UIViewController {
             self?.refreshBalance()
         }
 
-        notificationCenterTokens.append(
-            NotificationCenter.default.addObserver(
-                forName: UIApplication.willResignActiveNotification,
-                object: nil,
-                queue: .main
-            ) { [weak self ]_ in
+        // isso foi refatorado abaixo para um publisher
+        //        notificationCenterTokens.append(
+        //            NotificationCenter.default.addObserver(
+        //                forName: UIApplication.willResignActiveNotification,
+        //                object: nil,
+        //                queue: .main
+        //            ) { [weak self ]_ in
+        //                self?.state.isRedacted = true
+        //            }
+        //        )
+
+        
+        willResignActiveNotificationCancellable = notificationCenter.publisher(for: UIApplication.willResignActiveNotification)
+            //determino qual level irá receber a notification se tornando assincrono
+            //.receive(on: DispatchQueue.main)
+            .sink { [weak self ] _ in
                 self?.state.isRedacted = true
             }
-        )
-
-        notificationCenterTokens.append(
-            NotificationCenter.default.addObserver(
-                forName: UIApplication.didBecomeActiveNotification,
-                object: nil,
-                queue: .main
-            ) { [weak self ]_ in
+        // isso foi refatorado abaixo para um publisher
+//        notificationCenterTokens.append(
+//            NotificationCenter.default.addObserver(
+//                forName: UIApplication.didBecomeActiveNotification,
+//                object: nil,
+//                queue: .main
+//            ) { [weak self ]_ in
+//                self?.state.isRedacted = false
+//            }
+//        )
+        
+        didBecomeActiveNotificationCancellable = notificationCenter.publisher(for: UIApplication.didBecomeActiveNotification)
+        //determino qual level irá receber a notification se tornando assincrono
+        //.receive(on: DispatchQueue.main)
+            .sink{ [weak self] _ in
                 self?.state.isRedacted = false
             }
-        )
+
+        
     }
 
     override func viewDidAppear(_ animated: Bool) {

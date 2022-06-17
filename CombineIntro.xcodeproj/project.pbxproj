@@ -434,7 +434,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 7463GHQCGZ;
+				DEVELOPMENT_TEAM = 6G8JULRZR4;
 				INFOPLIST_FILE = CombineIntroTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -454,7 +454,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 7463GHQCGZ;
+				DEVELOPMENT_TEAM = 6G8JULRZR4;
 				INFOPLIST_FILE = CombineIntroTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
