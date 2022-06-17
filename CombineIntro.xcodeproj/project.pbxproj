@@ -17,6 +17,7 @@
 		611203852645558600311AE0 /* UIViewController+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611203842645558600311AE0 /* UIViewController+Extensions.swift */; };
 		61372F98264941F20079A228 /* BalanceViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61372F97264941F20079A228 /* BalanceViewState.swift */; };
 		61E0BE8E264BDED500414040 /* CombineIntroTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61E0BE8D264BDED500414040 /* CombineIntroTests.swift */; };
+		719C0BE5285B8F9C0073511C /* PublisherButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719C0BE4285B8F9C0073511C /* PublisherButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		61E0BE8B264BDED500414040 /* CombineIntroTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CombineIntroTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		61E0BE8D264BDED500414040 /* CombineIntroTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombineIntroTests.swift; sourceTree = "<group>"; };
 		61E0BE8F264BDED500414040 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		719C0BE4285B8F9C0073511C /* PublisherButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublisherButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +87,7 @@
 		611203652645517F00311AE0 /* CombineIntro */ = {
 			isa = PBXGroup;
 			children = (
+				719C0BE3285B8F720073511C /* CustomViews */,
 				6112037D264552C700311AE0 /* PreviewHelpers */,
 				6112037A2645525000311AE0 /* BalanceFeature */,
 				611203662645517F00311AE0 /* AppDelegate.swift */,
@@ -122,6 +125,14 @@
 				61E0BE8F264BDED500414040 /* Info.plist */,
 			);
 			path = CombineIntroTests;
+			sourceTree = "<group>";
+		};
+		719C0BE3285B8F720073511C /* CustomViews */ = {
+			isa = PBXGroup;
+			children = (
+				719C0BE4285B8F9C0073511C /* PublisherButton.swift */,
+			);
+			path = CustomViews;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -225,6 +236,7 @@
 			files = (
 				6112037C2645526300311AE0 /* BalanceView.swift in Sources */,
 				611203672645517F00311AE0 /* AppDelegate.swift in Sources */,
+				719C0BE5285B8F9C0073511C /* PublisherButton.swift in Sources */,
 				61120383264554E300311AE0 /* BalanceService.swift in Sources */,
 				611203812645549F00311AE0 /* BalanceViewController.swift in Sources */,
 				611203852645558600311AE0 /* UIViewController+Extensions.swift in Sources */,
@@ -385,13 +397,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 7463GHQCGZ;
+				DEVELOPMENT_TEAM = 6G8JULRZR4;
 				INFOPLIST_FILE = CombineIntro/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = dev.codemus.CombineIntro;
+				PRODUCT_BUNDLE_IDENTIFIER = com.makerBrasil.CombineIntro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -404,13 +416,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 7463GHQCGZ;
+				DEVELOPMENT_TEAM = 6G8JULRZR4;
 				INFOPLIST_FILE = CombineIntro/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = dev.codemus.CombineIntro;
+				PRODUCT_BUNDLE_IDENTIFIER = com.makerBrasil.CombineIntro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
