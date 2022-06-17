@@ -1,15 +1,19 @@
 import Foundation
 import UIKit
+import Combine
 
 @dynamicMemberLookup
 class BalanceViewController: UIViewController {
     private let rootView = BalanceView()
     private let service: BalanceService
     private var state = BalanceViewState() {
-        didSet { updateView() }
+        didSet {
+            updateView()
+        }
     }
     private var notificationCenterTokens: [NSObjectProtocol] = []
     private let formatDate: (Date) -> String
+    private var butonCancellable: AnyCancellable?
 
     init(
         service: BalanceService,
@@ -31,11 +35,11 @@ class BalanceViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        rootView.refreshButton.addTarget(
-            self,
-            action: #selector(refreshBalance),
-            for: .touchUpInside
-        )
+        butonCancellable = rootView.refreshButton
+            .touchUpInsidePublisher
+            .sink(receiveValue:{ [weak self ] _ in
+            self?.refreshBalance()
+        })
 
         notificationCenterTokens.append(
             NotificationCenter.default.addObserver(
