@@ -2,8 +2,18 @@ import Foundation
 import UIKit
 import Combine
 final class BalanceViewModel {
+    //stateSubject permanece private pois ele pode entregar o Sink mas tbm o Send e isso não é interessante
+    // CurrentValueSubject armazena o estado
+    private let stateSubject = CurrentValueSubject<BalanceViewState, Never>(BalanceViewState())
     
-    private(set) var state = BalanceViewState()
+    var statePublisher: AnyPublisher<BalanceViewState, Never> {
+        stateSubject.eraseToAnyPublisher()
+    }
+    private(set) var state: BalanceViewState {
+        get { stateSubject.value }
+        set { stateSubject.send(newValue) }
+    }
+    
     private let service: BalanceService
     private var notificationCenter: NotificationCenter = .default
     private var cancellables = Set<AnyCancellable>()

@@ -33,7 +33,11 @@ class BalanceViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        viewModel.statePublisher.sink { [ weak self ]_ in
+            self?.updateView()
+        }.store(in: &cancellables)
+        
         rootView.refreshButton
             .touchUpInsidePublisher
             .sink(receiveValue: viewModel.refreshBalance)
